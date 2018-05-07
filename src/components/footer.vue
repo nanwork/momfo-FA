@@ -1,31 +1,3 @@
-<template>
-  <div class="footer">
-    <div class="footer-layout">
-      <div class="footer-logo">
-        <img src="../assets/images/logo.png" alt="">
-        <img src="../assets/images/footer-map.png" alt="" class="footer-map">
-      </div>
-      <div class="footer-contact">
-        <h3>联系我们</h3>
-        <span class="line"></span>
-        <p>联系电话：17301873832&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电子信箱：bd@momfo.com</p>
-        <p>官方网站：www.momfofintech.com</p>
-        <p>公司地址：上海市长宁区金钟路968号凌空SOHO3号楼901室</p>
-      </div>
-      <div class="footer-code">
-        <figure>
-            <img src="../assets/images/footer-momfo-code.png" alt="">
-            <figcaption>关注我们</figcaption>
-        </figure>
-        <figure>
-            <img src="../assets/images/footer-service-code.png" alt="">
-            <figcaption>客服微信</figcaption>
-        </figure>
-      </div>
-    </div>
-  </div>
-</template>
-
 <style lang="scss" scoped>
   .footer{
     height: 220px;
@@ -93,3 +65,31 @@
     }
   }
 </style>
+
+<template>
+  <div class="footer">
+    <div class="footer-layout">
+      <div class="footer-logo">
+        <img src="../../static/images/logo.png" alt="">
+        <img src="../../static/images/footer-map.png" alt="" class="footer-map">
+      </div>
+      <div class="footer-contact">
+        <h3>联系我们</h3>
+        <span class="line"></span>
+        <p>联系电话：17301873832&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电子信箱：bd@momfo.com</p>
+        <p>官方网站：www.momfofintech.com</p>
+        <p>公司地址：上海市长宁区金钟路968号凌空SOHO3号楼901室</p>
+      </div>
+      <div class="footer-code">
+        <figure>
+            <img src="../../static//images/footer-momfo-code.png" alt="">
+            <figcaption>关注我们</figcaption>
+        </figure>
+        <figure>
+            <img src="../../static/images/footer-service-code.png" alt="">
+            <figcaption>客服微信</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</template>
