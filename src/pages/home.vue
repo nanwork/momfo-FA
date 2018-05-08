@@ -20,28 +20,7 @@
     right: 0;
     margin: 0 auto;
     z-index: 9999;
-    -webkit-animation: arrow 2s linear infinite;
-    -o-animation: arrow 2s linear infinite;
-    -moz-animation: arrow 2s linear infinite;
     animation: arrow 2s linear infinite;
-  }
-  @-webkit-keyframes arrow{
-      50% {
-          opacity: 0.5;
-          bottom: 40px;
-      }
-  }
-  @-moz-keyframes arrow{
-      50% {
-          opacity: 0.5;
-          bottom: 40px;
-      }
-  }
-  @-o-keyframes arrow{
-      50% {
-          opacity: 0.5;
-          bottom: 40px;
-      }
   }
   @keyframes arrow {
       50% {
@@ -49,28 +28,36 @@
           bottom: 40px;
       }
   }
-  .tab-active {
-    color: #DDAB50;
-  }
   header {
-    position: absolute;
-    top: 50px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 1200px;
+    width: 100%;
+    height: 90px;
+    line-height: 100px;
+    position: fixed;
     z-index: 1;
-    display: flex;
-    justify-content: space-between;
-    ul {
+    .header-wrap{
+      margin: 0 auto;
+      width: 1200px;
       display: flex;
-      li {
-        margin: 0 30px;
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
+      justify-content: space-between;
+      ul {
+        display: flex;
+        li {
+          margin: 0 30px;
+          color: #fff;
+          font-size: 16px;
+          cursor: pointer;
+        }
+        .tab-active {
+          color: #DDAB50;
+        }
+        li:hover{
+          color: #DDAB50;
+        }
       }
     }
+  }
+  .header-bg{
+    background: #191919;
   }
   .home{
   	@at-root &-index{
@@ -145,11 +132,11 @@
       background-size: 100% 100%;
   	}
    @at-root &-about{
-      @at-root &-navBg{
-        width: 100%;
-        height: 90px;
-        background:#191919;
-      }
+      // @at-root &-navBg{
+      //   width: 100%;
+      //   height: 90px;
+      //   background:#191919;
+      // }
       .layout{
         width: 1200px;
         margin: 0 auto;
@@ -198,7 +185,7 @@
         }
       }
       .partners{
-        margin-top: 60px;
+        margin-top: 150px;
         text-align: center;
       }
       .guarantee{
@@ -228,18 +215,20 @@
 
 <template>
 <div>
-  <header>
-    <div class="home-logo">
-    	<img src="../../static/images/logo.png"/>
+  <header :class="[3,4].includes(activeIndex)?'header-bg':''">
+    <div class="header-wrap">
+      <div class="home-logo">
+        <img src="../../static/images/logo.png"/>
+      </div>
+      <ul>
+        <li
+          v-for="(tab, index) in tabs"
+          :key="tab"
+          :class="activeIndex === index && 'tab-active'"
+          @click="tabHandle(index)"
+        >{{tab}}</li>
+      </ul>
     </div>
-    <ul>
-      <li
-        v-for="(tab, index) in tabs"
-        :key="tab"
-        :class="activeIndex === index && 'tab-active'"
-        @click="tabHandle(index)"
-      >{{tab}}</li>
-    </ul>
   </header>
   <div class="home" :class="[0,1,2].includes(activeIndex)?'arrowShow':''">
       <swiper :options="swiperOption">
@@ -275,7 +264,7 @@
           </div>
         </swiper-slide>
         <swiper-slide class="home-about">
-          <div class="home-about-navBg"></div>
+          <!-- <div class="home-about-navBg"></div> -->
           <div class="partners">
             <div class="layout">
               <div class="about-title">
@@ -328,6 +317,7 @@
         swiper: null,
         swiperOption: {
           autoplay: true,
+          mousewheel: true,
           speed:1000,
           direction: 'vertical',
           resistanceRatio : 0,

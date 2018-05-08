@@ -1,9 +1,9 @@
 <style lang="scss" scoped>
   .footer{
-    height: 220px;
+    height: 170px;
     width: 100%;
     background:rgba(18,18,18,1);
-    padding-top: 40px;
+    padding-top: 30px;
     @at-root &-layout{
       width: 1200px;
       height: 100%;
@@ -13,7 +13,7 @@
       justify-content: space-between;
     }
     @at-root &-map{
-      margin-top: 50px;
+      margin-top: 30px;
     }
     @at-root &-logo{
       width: 200px;
@@ -27,7 +27,7 @@
       h3{
         font-size: 18px;
         color: #fff;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
       }
       .line{
         display: block;
@@ -41,15 +41,14 @@
       p{
         color: #fff;
         font-size: 16px;
-        line-height: 40px;
+        line-height: 34px;
         opacity: 0.8;
         letter-spacing: 1px;
       }
     }
     @at-root &-code{
       width: 220px;
-      height: 100%;
-      padding-top: 30px;
+      padding-top: 15px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -58,7 +57,7 @@
         figcaption{
           color: #fff;
           font-size: 16px;
-          margin-top: 25px;
+          margin-top: 15px;
           opacity: 0.8;
         }
       }
@@ -82,7 +81,7 @@
       </div>
       <div class="footer-code">
         <figure>
-            <img src="../../static//images/footer-momfo-code.png" alt="">
+            <img src="../../static/images/footer-momfo-code.png" alt="">
             <figcaption>关注我们</figcaption>
         </figure>
         <figure>
