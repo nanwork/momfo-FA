@@ -129,6 +129,9 @@
       }
     }
   }
+  .capital-quality{
+    height: 650px;
+  }
   .pro-resource{
     padding-top: 60px;
     opacity:0.98;
@@ -153,11 +156,38 @@
       .even{
         background:rgba(240,240,240,1);
         line-height: 200px;
+        position: relative;
+        i{
+          position: absolute;
+          display: inline-block;
+          width: 0;
+          height: 0;
+          border: 20px solid rgba(240,240,240,1);
+        }
+        .arrow-qk{
+          top: 80px;
+          right: 0;
+          border-right-color: rgba(249,249,249,1);
+        }
+        .arrow-wly{
+          bottom: 0;
+          right: 180px;
+          border-bottom-color: rgba(249,249,249,1)
+        }
+        .arrow-isz{
+          top: 80px;
+          left: 0;
+          border-left-color: rgba(249,249,249,1)
+        }
       }
       .odd{
         background:rgba(249,249,249,1);
         padding-top: 55px;
         height: 145px;
+      }
+      .capital-odd{
+        padding-top: 70px;
+        height: 130px;
       }
     }
   }
@@ -181,13 +211,88 @@
       justify-content: space-between;
       .info-left{
         width: 420px;
-        height: 220px;
-        background: #DDAB50;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        div{
+          width: 100%;
+          height: 55px;
+          position: relative;
+          background: #fff;
+          span{
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            font-size: 18px;
+            color: #191919;
+          }
+          input{
+            width: 340px;
+            height: 55px;
+            padding-left: 80px;
+            font-size: 18px;
+          }
+        }
+        p{
+          font-size: 16px;
+          color: #fff;
+          margin-bottom: 20px;
+          text-align: center;
+          opacity: 0.8;
+        }
       }
       .info-right{
         width: 530px;
-        height: 220px;
-        background: #DDAB50;
+        height: 230px;
+        background: #fff;
+        .brief{
+          p{
+            width: 100%;
+            height: 40px;
+            line-height: 45px;
+            font-size: 18px;
+            color: #191919;
+            background: #fff;
+            text-align: left; 
+            span{
+              margin-left: 15px;
+            }
+          }
+          .numLimit{
+            text-align: right;
+            height: 33px;
+            line-height: 30px;
+            span{
+              margin-right: 20px;
+              font-size: 14px;
+              color: #191919;
+            }
+          }
+          textarea{
+            border: 0;
+            font-size: 18px;
+            resize:none;
+            outline: none;
+            text-indent: 2em;
+          }
+        }
+        .apply{
+          margin-top: 20px;
+          text-align: right;
+          button{
+            width: 160px;
+            height: 50px;
+            font-size: 18px;
+            line-height: 50px;
+            color: #fff;
+            opacity: 0.8;
+            border: 1px solid #fff;
+            background: #191919;
+            cursor: pointer;
+            outline: none;
+          }
+        }
       }
     }
   }
@@ -292,6 +397,7 @@
           <div class="layout">
             <ul>
               <li class="even">
+                <i class="arrow-qk"></i>
                 <img src="../../static/images/pro-qk.png" alt="">
               </li>
               <li class="odd">
@@ -300,6 +406,7 @@
                 <p>的一二线城市近千家公寓品牌客户</p>
               </li>
               <li class="even">
+                <i class="arrow-wly"></i>
                 <img src="../../static/images/pro-wly.png" alt="">
               </li>
               <li class="odd">
@@ -308,6 +415,7 @@
                 <p>目的中小运营商</p>
               </li>
               <li class="even">
+                <i class="arrow-isz"></i>
                 <img src="../../static/images/pro-isz.png" alt="">
               </li>
               <li class="odd">
@@ -328,10 +436,29 @@
         </div>
         <div class="pro-project-info">
           <div class="info-left">
-
+            <div class="name">
+              <span>姓名*</span>
+              <input type="text" name="name" maxlength="15"/>
+            </div>
+            <div class="email">
+              <span>邮箱*</span>
+              <input type="text" name="email" maxlength="32"/>
+            </div>
+            <div class="mobile">
+              <span>电话*</span>
+              <input type="text" name="mobile" maxlength="12"/>
+            </div>
+            <p>注：提交申请后，项目经理将在1~3个工作日内联络您</p>
           </div>
           <div class="info-right">
-
+            <div class="brief">
+              <p><span>资源简介:</span></p>
+              <textarea cols="54" rows="7" id="brief" name="brief"></textarea> 
+              <p class="numLimit"><span>0/250</span></p>
+            </div>
+            <div class="apply">
+              <button>申请匹配</button>
+            </div>
           </div>
         </div>
       </div>
@@ -358,7 +485,6 @@
     methods: {
       handleScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        console.log(scrollTop)
         if (scrollTop > 230) {
           this.headerShow = false;
         } else {
