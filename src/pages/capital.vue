@@ -105,6 +105,57 @@
       }
     }
   }
+  .cap-service-list{
+    figure{
+      width: 300px;
+      height: 200px;
+      border-right: 1px solid rgba(228,228,228,1);
+      img{
+        transition:margin-top 0.7s;
+      }
+      .detailTxt{
+        transition:all 0.7s;
+      }
+      img{
+        margin-top: 48px;
+      }
+      figcaption{
+        p:first-child{
+          font-size: 18px;
+          color: #191919;
+          margin: 20px auto 10px;
+        }
+        p:nth-child(2){
+          font-size: 14px;
+          color: #191919;
+          opacity: 0.8;
+        }
+        .detailTxt{
+          opacity: 0;
+          margin-top: 40px;
+          p{
+            font-size: 16px;
+            color: #191919;
+            opacity: 1.0;
+          }
+        }
+      }
+    }
+    figure:last-child{
+      border: 0;
+    }
+    figure:hover{
+      img{
+        margin-top: 15px;
+        transition:margin-top 0.7s;
+      }
+      .detailTxt{
+        opacity:1.0;
+        margin-top: 0;
+        transition:all 0.7s;
+      }
+    }
+  }
   .pro-quality{
     height: 430px;
     padding-top: 60px;
@@ -329,26 +380,48 @@
           <p>PROFESSIONAL SERVICE</p>
           <p class="line"></p>
         </div>
-        <div class="pro-service-list">
+        <div class="pro-service-list cap-service-list">
           <figure>
-            <img src="../../static/images/pro-resource.png" alt="">
+            <img src="../../static/images/capital-require.png" alt="">
             <figcaption>
-              <p>提供优质项目资源  解决“项目难找”问题</p>
-              <p>Provide Fine Project</p>
+              <p>确定需求</p>
+              <p>Demand Determinationt</p>
+              <div class="detailTxt">
+                <p>了解实际需求 / 提供融资建议</p>
+                <p>对接合适资方</p>
+              </div>
             </figcaption>
           </figure>
           <figure>
-            <img src="../../static/images/pro-value.png" alt="">
+            <img src="../../static/images/capital-assess.png" alt="">
             <figcaption>
-              <p>全面评估项目价值  解决“项目难断”问题</p>
-              <p>Assess Project Value</p>
+              <p>项目评估</p>
+              <p>Project Evaluation</p>
+              <div class="detailTxt">
+                <p>进行专业评估 / 判断项目价值</p>
+                <p>保障最大利益</p>
+              </div>
             </figcaption>
           </figure>
           <figure>
-            <img src="../../static/images/pro-progress.png" alt="">
+            <img src="../../static/images/capital-show.png" alt="">
             <figcaption>
-              <p>全程跟踪项目进展  解决“项目难落”问题</p>
-              <p>Track Project Progress</p>
+              <p>协助路演</p>
+              <p>Roadshow Aassistant</p>
+              <div class="detailTxt">
+                <p>协同运营路演 / 整理资方意见</p>
+                <p>修改商业计划</p>
+              </div>
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="../../static/images/capital-trade.png" alt="">
+            <figcaption>
+              <p>达成交易</p>
+              <p>Deal Done</p>
+              <div class="detailTxt">
+                <p>辅助完成合同签署</p>
+              </div>
             </figcaption>
           </figure>
         </div>
@@ -456,7 +529,8 @@
       comFooter
     },
     mounted () {
-      window.addEventListener('scroll', this.handleScroll)
+      // 滚动页面后头部的效果
+      window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
       handleScroll () {
