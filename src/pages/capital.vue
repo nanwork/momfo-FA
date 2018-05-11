@@ -111,10 +111,10 @@
       height: 200px;
       border-right: 1px solid rgba(228,228,228,1);
       img{
-        transition:margin-top 0.7s;
+        transition:margin-top 0.7s ease;
       }
       .detailTxt{
-        transition:all 0.7s;
+        transition:all 0.7s ease;
       }
       img{
         margin-top: 48px;
@@ -141,18 +141,34 @@
         }
       }
     }
+    .serviceBg01{
+      background: url(../../static/images/01.png) no-repeat center;
+      background-size: 65px 50px;
+    }
+    .serviceBg02{
+      background: url(../../static/images/02.png) no-repeat center;
+      background-size: 65px 50px;
+    }
+    .serviceBg03{
+      background: url(../../static/images/03.png) no-repeat center;
+      background-size: 65px 50px;
+    }
+    .serviceBg04{
+      background: url(../../static/images/04.png) no-repeat center;
+      background-size: 65px 50px;
+    }
     figure:last-child{
       border: 0;
     }
     figure:hover{
       img{
         margin-top: 15px;
-        transition:margin-top 0.7s;
+        transition:margin-top 0.7s ease;
       }
       .detailTxt{
         opacity:1.0;
         margin-top: 0;
-        transition:all 0.7s;
+        transition:all 0.7s ease;
       }
     }
   }
@@ -381,7 +397,7 @@
           <p class="line"></p>
         </div>
         <div class="pro-service-list cap-service-list">
-          <figure>
+          <figure class="serviceBg01">
             <img src="../../static/images/capital-require.png" alt="">
             <figcaption>
               <p>确定需求</p>
@@ -392,7 +408,7 @@
               </div>
             </figcaption>
           </figure>
-          <figure>
+          <figure class="serviceBg02">
             <img src="../../static/images/capital-assess.png" alt="">
             <figcaption>
               <p>项目评估</p>
@@ -403,7 +419,7 @@
               </div>
             </figcaption>
           </figure>
-          <figure>
+          <figure class="serviceBg03">
             <img src="../../static/images/capital-show.png" alt="">
             <figcaption>
               <p>协助路演</p>
@@ -414,7 +430,7 @@
               </div>
             </figcaption>
           </figure>
-          <figure>
+          <figure class="serviceBg04">
             <img src="../../static/images/capital-trade.png" alt="">
             <figcaption>
               <p>达成交易</p>
@@ -502,8 +518,8 @@
           <div class="info-right">
             <div class="brief">
               <p><span>资源简介:</span></p>
-              <textarea cols="54" rows="7" id="brief" name="brief"></textarea> 
-              <p class="numLimit"><span>0/250</span></p>
+              <textarea cols="54" rows="7" id="brief" name="brief" maxlength="250" v-on:input ="wordCount"></textarea> 
+              <p class="numLimit"><span>{{num}}/250</span></p>
             </div>
             <div class="apply">
               <button>申请匹配</button>
@@ -522,17 +538,18 @@
   export default {
     data() {
       return {
-        headerShow:true
+        headerShow:true,
+        num:0
       }
     },
     components: {
       comFooter
     },
     mounted () {
-      // 滚动页面后头部的效果
       window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
+      // 滚动页面后头部的效果
       handleScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         if (scrollTop > 230) {
@@ -540,7 +557,13 @@
         } else {
           this.headerShow = true;
         }
-      }
+      },
+      // 资源简介字数限制
+      wordCount (e){
+        var value = e.target.value;  
+        var len = parseInt(value.length);   
+        this.num = len;
+      }  
     }
   }
 </script>

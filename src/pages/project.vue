@@ -296,6 +296,22 @@
       }
     }
   }
+  .applyNow{
+    position: fixed;
+    right: 50px;
+    bottom: 0;
+    button{
+      width:160px;
+      height:50px; 
+      font-size: 18px;
+      color: #191919;
+      background:rgba(255,255,255,1);
+      box-shadow:0px 0px 10px rgba(0,0,0,0.15);
+      border: 0; 
+      cursor: pointer;
+      outline: none;
+    }
+  }
 </style>
 
 <template>
@@ -427,7 +443,7 @@
         </div>
       </div>
     </div>
-    <div class="pro-project">
+    <div class="pro-project" id="apply">
       <div class="layout">
         <div class="pro-project-title pro-com-title">
           <h1>申请匹配项目</h1>
@@ -453,8 +469,8 @@
           <div class="info-right">
             <div class="brief">
               <p><span>资源简介:</span></p>
-              <textarea cols="54" rows="7" id="brief" name="brief"></textarea> 
-              <p class="numLimit"><span>0/250</span></p>
+              <textarea cols="54" rows="7" id="brief" name="brief" maxlength="250" v-on:input ="wordCount"></textarea> 
+              <p class="numLimit"><span>{{num}}/250</span></p>
             </div>
             <div class="apply">
               <button>申请匹配</button>
@@ -462,6 +478,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="applyNow">
+      <button @click="applyNow()">立即申请</button>
     </div>
     <comFooter />
   </div>
@@ -473,16 +492,18 @@
   export default {
     data() {
       return {
-        headerShow:true
+        headerShow:true,
+        num:0
       }
     },
     components: {
       comFooter
     },
     mounted () {
-      window.addEventListener('scroll', this.handleScroll)
+      window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
+      // 滚动页面后头部的效果
       handleScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         if (scrollTop > 230) {
@@ -490,7 +511,35 @@
         } else {
           this.headerShow = true;
         }
-      }
+      },
+      // 资源简介字数限制
+      wordCount (e){
+        var value = e.target.value;  
+        var len = parseInt(value.length);   
+        this.num = len;
+      },
+      //点击立即申请页面定位到表单
+      applyNow (){
+        // document.body.scrollTop = document.getElementById("apply").offsetTop ;
+        // window.pageYOffset = document.getElementById("apply").offsetTop ;
+        // document.documentElement.scrollTop = document.getElementById("apply").offsetTop ;
+        var gotoApply= function(){
+          var currentPosition = document.documentElement.scrollTop || document.body.scrollTop;
+          var a = document.getElementById("apply").offsetTop;
+          console.log(a)
+          console.log(currentPosition)
+          currentPosition += 10;
+          if (currentPosition < a) {
+            window.scrollTo(0, currentPosition);
+          }
+          else {
+            window.scrollTo(0, a);
+            clearInterval(timer);
+            timer = null;
+          }
+        }
+        var timer=setInterval(gotoApply,1);
+      }  
     }
   }
 </script>
