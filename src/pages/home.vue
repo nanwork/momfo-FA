@@ -211,6 +211,9 @@
       }
     }
   }
+  .map{
+    margin-bottom: 70px;
+  }
 </style>
 
 <template>
@@ -264,7 +267,6 @@
           </div>
         </swiper-slide>
         <swiper-slide class="home-about">
-          <!-- <div class="home-about-navBg"></div> -->
           <div class="partners">
             <div class="layout">
               <div class="about-title">
@@ -293,9 +295,22 @@
               <p>上海正策律师事务所(上海市法协会团体事业单位)提供专业法律支持</p>
             </div>
           </div>
+        </swiper-slide>
+        <swiper-slide class="home-about">
+          <div class="partners">
+            <div class="layout">
+              <div class="about-title">
+                <h1>联系我们</h1>
+                <p>CONNECT US</p>
+                <p class="line"></p>
+              </div>
+              <div class="map">
+                <img src="../../static/images/map.png" alt="" />
+              </div>
+            </div>
+          </div>
           <comFooter />
         </swiper-slide>
-        <swiper-slide>Slide 5</swiper-slide>
       </swiper>
   </div>
 </div>

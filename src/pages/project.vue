@@ -315,7 +315,7 @@
 </style>
 
 <template>
-  <div>
+  <div id="main">
     <header v-show = "headerShow">
       <div class="header-wrap">
         <div class="home-logo">
@@ -473,7 +473,7 @@
               <p class="numLimit"><span>{{num}}/250</span></p>
             </div>
             <div class="apply">
-              <button>申请匹配</button>
+              <button @click="apply()">申请匹配</button>
             </div>
           </div>
         </div>
@@ -483,27 +483,31 @@
       <button @click="applyNow()">立即申请</button>
     </div>
     <comFooter />
+    <successDialog v-if="show" />
   </div>
 </template>
 
 <script>
   import comFooter from '@/components/footer.vue'
+  import successDialog from '@/components/applySuccessDialog.vue'
 
   export default {
     data() {
       return {
         headerShow:true,
-        num:0
+        num:0,
+        show:false
       }
     },
     components: {
-      comFooter
+      comFooter,
+      successDialog
     },
     mounted () {
       window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
-      // 滚动页面后头部的效果
+      // 页面滚动后头部的效果
       handleScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         if (scrollTop > 230) {
@@ -511,6 +515,10 @@
         } else {
           this.headerShow = true;
         }
+      },
+      //点击申请匹配
+      apply (){
+        this.show = true;
       },
       // 资源简介字数限制
       wordCount (e){
@@ -520,25 +528,27 @@
       },
       //点击立即申请页面定位到表单
       applyNow (){
-        // document.body.scrollTop = document.getElementById("apply").offsetTop ;
-        // window.pageYOffset = document.getElementById("apply").offsetTop ;
-        // document.documentElement.scrollTop = document.getElementById("apply").offsetTop ;
-        var gotoApply= function(){
-          var currentPosition = document.documentElement.scrollTop || document.body.scrollTop;
-          var a = document.getElementById("apply").offsetTop;
-          console.log(a)
-          console.log(currentPosition)
-          currentPosition += 10;
-          if (currentPosition < a) {
-            window.scrollTo(0, currentPosition);
-          }
-          else {
-            window.scrollTo(0, a);
-            clearInterval(timer);
-            timer = null;
-          }
-        }
-        var timer=setInterval(gotoApply,1);
+        document.getElementById('main').scrollTop=document.getElementById('main').scrollHeight;
+        window.scrollTo(0, document.getElementById('main').scrollHeight);
+        console.log(document.getElementById('apply').scrollHeight)
+        console.log(document.getElementById('apply').scrollTop)
+        console.log(document.getElementById('apply').clientHeight)
+        console.log(document.documentElement.scrollTop || document.body.scrollTop)
+        // var gotoApply= function(){
+        //   var currentPosition = document.documentElement.scrollTop || document.body.scrollTop;
+        //   var goal = document.getElementById('main').scrollHeight;
+        //   currentPosition += 10;
+        //   console.log(goal)
+        //   console.log(currentPosition)
+        //   if (currentPosition < goal) {
+        //     window.scrollTo(0, currentPosition);
+        //   }
+        //   else {
+        //     clearInterval(timer);
+        //     timer = null;
+        //   }
+        // }
+        // var timer=setInterval(gotoApply,1);
       }  
     }
   }
