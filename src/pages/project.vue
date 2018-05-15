@@ -14,6 +14,9 @@
       width: 1200px;
       display: flex;
       justify-content: space-between;
+      .home-logo{
+        cursor:pointer;
+      }
       .gohome{
         cursor: pointer;
         i{
@@ -300,6 +303,7 @@
     position: fixed;
     right: 50px;
     bottom: 0;
+    z-index: 100;
     button{
       width:160px;
       height:50px; 
@@ -316,18 +320,18 @@
 
 <template>
   <div id="main">
-    <header v-show = "headerShow">
+    <header v-show = "headerShow" id="header">
       <div class="header-wrap">
-        <div class="home-logo">
+        <div class="home-logo" @click="gohome()">
           <img src="../../static/images/logo.png"/>
         </div>
         <div class="gohome">
           <i></i>
-          <span>返回首页</span>
+          <span @click="gohome()">返回首页</span>
         </div>
       </div>
     </header>
-    <div class="pro-title">
+    <div class="pro-title" id="banner">
       <h1>找项目</h1>
       <h2>FOR PROJECT</h2>
       <div class="pro-title-line">
@@ -454,22 +458,22 @@
           <div class="info-left">
             <div class="name">
               <span>姓名*</span>
-              <input type="text" name="name" maxlength="15"/>
+              <input type="text" v-model="applyInfo.username" name="name" maxlength="15" />
             </div>
             <div class="email">
               <span>邮箱*</span>
-              <input type="text" name="email" maxlength="32"/>
+              <input type="text" v-model="applyInfo.email" name="email" maxlength="32" onkeyup='this.value=this.value.replace(/[^a-zA-Z0-9@\.\-\_]/g,"")' />
             </div>
             <div class="mobile">
               <span>电话*</span>
-              <input type="text" name="mobile" maxlength="12"/>
+              <input type="text" v-model="applyInfo.mobile" name="mobile" maxlength="12" onkeyup='this.value=this.value.replace(/[^0-9\-]/g,"")' />
             </div>
             <p>注：提交申请后，项目经理将在1~3个工作日内联络您</p>
           </div>
           <div class="info-right">
             <div class="brief">
               <p><span>资源简介:</span></p>
-              <textarea cols="54" rows="7" id="brief" name="brief" maxlength="250" v-on:input ="wordCount"></textarea> 
+              <textarea cols="54" v-model="applyInfo.brief" rows="7" name="brief" maxlength="250" v-on:input ="wordCount"></textarea> 
               <p class="numLimit"><span>{{num}}/250</span></p>
             </div>
             <div class="apply">
@@ -483,20 +487,28 @@
       <button @click="applyNow()">立即申请</button>
     </div>
     <comFooter />
-    <successDialog v-if="show" />
+    <successDialog :visible="show" :close="hideModal"/>
   </div>
 </template>
 
 <script>
+  import jump from 'jump.js'
+  import api from '@/store/api.js'
   import comFooter from '@/components/footer.vue'
   import successDialog from '@/components/applySuccessDialog.vue'
 
   export default {
     data() {
       return {
-        headerShow:true,
-        num:0,
-        show:false
+        headerShow: true,
+        num: 0,
+        show: false,
+        applyInfo: {
+          username: '',
+          email: '',
+          mobile: '',
+          brief: ''
+        }
       }
     },
     components: {
@@ -507,10 +519,14 @@
       window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
+      //点击回到首页
+      gohome (){
+        this.$router.push('/');
+      },
       // 页面滚动后头部的效果
       handleScroll () {
-        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        if (scrollTop > 230) {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > 200) {
           this.headerShow = false;
         } else {
           this.headerShow = true;
@@ -518,7 +534,25 @@
       },
       //点击申请匹配
       apply (){
-        this.show = true;
+        var mobileReg = new RegExp("^(0\\d{2,3}-\\d{7,8}(-\\d{3,5}){0,1})|(((13[0-9])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8})$");
+        var emailReg = new RegExp("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$");
+        if(this.applyInfo.username == ""){
+          alert("请输入姓名") 
+          return false
+        }else if(this.applyInfo.email == ""){
+          alert("请输入邮箱")
+          return false
+        }else if(!emailReg.test(this.applyInfo.email)){
+          alert("邮箱格式不正确")
+          return false
+        }else if(this.applyInfo.mobile == ""){
+          alert("请输入联系电话")
+          return false
+        }else if(!mobileReg.test(this.applyInfo.mobile)){
+          alert("联系电话格式不正确")
+          return false
+        }
+        // this.show = true;
       },
       // 资源简介字数限制
       wordCount (e){
@@ -527,29 +561,17 @@
         this.num = len;
       },
       //点击立即申请页面定位到表单
-      applyNow (){
-        document.getElementById('main').scrollTop=document.getElementById('main').scrollHeight;
-        window.scrollTo(0, document.getElementById('main').scrollHeight);
-        console.log(document.getElementById('apply').scrollHeight)
-        console.log(document.getElementById('apply').scrollTop)
-        console.log(document.getElementById('apply').clientHeight)
-        console.log(document.documentElement.scrollTop || document.body.scrollTop)
-        // var gotoApply= function(){
-        //   var currentPosition = document.documentElement.scrollTop || document.body.scrollTop;
-        //   var goal = document.getElementById('main').scrollHeight;
-        //   currentPosition += 10;
-        //   console.log(goal)
-        //   console.log(currentPosition)
-        //   if (currentPosition < goal) {
-        //     window.scrollTo(0, currentPosition);
-        //   }
-        //   else {
-        //     clearInterval(timer);
-        //     timer = null;
-        //   }
-        // }
-        // var timer=setInterval(gotoApply,1);
-      }  
+      applyNow() {
+        jump(document.getElementById('apply'), {
+          duration: 1000,
+          offset: 0,
+          callback: undefined,
+          a11y: false
+        })
+      },
+      hideModal() {
+        this.show = false
+      }
     }
   }
 </script>

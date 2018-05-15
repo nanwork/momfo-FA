@@ -220,7 +220,7 @@
 <div>
   <header :class="[3,4].includes(activeIndex)?'header-bg':''">
     <div class="header-wrap">
-      <div class="home-logo">
+      <div class="home-logo" @click="gohome()">
         <img src="../../static/images/logo.png"/>
       </div>
       <ul>
@@ -278,9 +278,9 @@
                 <ul>
                   <li 
                     v-for="(partner, index) in partners" 
+                    :key="partner"
                     :class="{ 'border-top-none': index < 5,'border-right-none':[4, 9].includes(index)}"
-                    ><img :src="'../../static/images/'+partner" alt="" />
-                  </li>
+                    ><img :src="'../../static/images/'+partner" alt="" /></li>
                 </ul>
               </div>
             </div>
@@ -338,9 +338,13 @@
           resistanceRatio : 0,
           on: {
             slideChangeTransitionEnd: function(event) {
+              console.log("@")
               const index = this.activeIndex
               Vue.nextTick(function () {
+                console.log("bb")
                 self.activeIndex = index
+              console.log(self.activeIndex)
+              console.log(index)
               })
             },
             init: function () {
@@ -351,6 +355,9 @@
       }
     },
     methods: {
+      gohome (){
+        this.$router.push('/');
+      },
       tabHandle(index) {
         if (this.swiper === null) return
         this.activeIndex = index

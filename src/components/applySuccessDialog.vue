@@ -53,10 +53,10 @@
 </style>
 
 <template>
-  <div class="dialog" v-if="show">
+  <div class="dialog" v-if="visible">
     <div class="dialog-bg"></div>
       <div class="dialog-box">
-        <i @click="close()"></i>
+        <i @click="handleClose"></i>
         <img src="../../static/images/icon/success.png" alt="" />
         <h2>恭喜您申请成功！</h2>
         <p>项目经理将在1~3个工作日内联络您</p>
@@ -65,15 +65,24 @@
 </template>
 <script>
 export default {
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    },
+    close: Function,
+  },
   data (){
     return {
       show : true
     }
   },
-  methods :{
+  methods: {
     //点击关闭弹框
-    close (){
-      this.show = false;
+    handleClose () {
+      if (typeof this.close === 'function') {
+        this.close();
+      }
     }
   }
 }
