@@ -58,6 +58,7 @@
   }
   .header-bg{
     background: #191919;
+    transition: all .3s;
   }
   .home{
   	@at-root &-index{
@@ -132,11 +133,6 @@
       background-size: 100% 100%;
   	}
    @at-root &-about{
-      // @at-root &-navBg{
-      //   width: 100%;
-      //   height: 90px;
-      //   background:#191919;
-      // }
       .layout{
         width: 1200px;
         margin: 0 auto;
@@ -214,26 +210,117 @@
   .map{
     margin-bottom: 70px;
   }
+  .swiper-slide {
+    position: relative;
+    min-width: 1200px;
+    .home-about .partners {
+      margin-top: 11%;
+    }
+    .guarantee {
+      position: absolute;
+      bottom: 0;
+      padding-top: 3%;
+      height: 30%;
+    }
+    .about-title .line {
+      margin-bottom: 4.5%;
+    }
+    // 垂直居中
+    .partners {
+      margin-top: 0;
+      height: 81%;
+      min-height: 692px;
+      .layout {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      &:before {
+        content: '';
+        height: 100%;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    .partners-footer {
+      height: 96%;
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+  .logo li{
+    float: left;
+    width: 239px;
+    height: 109px;
+    line-height: 108px;
+    text-align: center;
+    border-top: 1px solid rgba(228,228,228,1);
+    border-right: 1px solid rgba(228,228,228,1);
+    img{
+      vertical-align: middle;
+    }
+  }
+  .map {
+    img {
+      width: 90%;
+    }
+  }
+  @media (max-width: 1366px) {
+    .home-index-text{
+      margin: 200px auto 0;
+    }
+    .partners-footer .layout .map {
+      img {
+        width: 68%;
+      }
+    }
+  }
+</style>
+
+<style lang="scss">
+.el-tabs__nav-wrap::after {
+  background-color: initial;
+}
+.el-tabs__item {
+  font-size: 16px;
+  color: #fff;
+  &.is-active {
+    color: #DDAB50;
+  }
+  &:hover {
+    color: #DDAB50;
+  }
+}
+.el-tabs__nav {
+  height: 75px;
+}
+.el-tabs__active-bar {
+  background-color: #DDAB50;
+}
 </style>
 
 <template>
 <div>
-  <header :class="[3,4].includes(activeIndex)?'header-bg':''">
+  <header :class="['3','4'].includes(activeIndex)?'header-bg':''">
     <div class="header-wrap">
       <div class="home-logo" @click="gohome()">
         <img src="../../static/images/logo.png"/>
       </div>
-      <ul>
-        <li
+      <el-tabs
+        @tab-click="tabHandle"
+        :value="activeIndex"
+      >
+        <el-tab-pane
           v-for="(tab, index) in tabs"
           :key="tab"
-          :class="activeIndex === index && 'tab-active'"
-          @click="tabHandle(index)"
-        >{{tab}}</li>
-      </ul>
+          :label="tab"
+          :name="`${index}`"
+        />
+      </el-tabs>
     </div>
   </header>
-  <div class="home" :class="[0,1,2].includes(activeIndex)?'arrowShow':''">
+  <div class="home" :class="['0','1','2'].includes(activeIndex)?'arrowShow':''">
       <swiper :options="swiperOption">
         <swiper-slide class="home-index">
           <div class="home-index-text">
@@ -297,7 +384,7 @@
           </div>
         </swiper-slide>
         <swiper-slide class="home-about">
-          <div class="partners">
+          <div class="partners partners-footer">
             <div class="layout">
               <div class="about-title">
                 <h1>联系我们</h1>
@@ -314,6 +401,7 @@
       </swiper>
   </div>
 </div>
+
 </template>
 
 <script>
@@ -322,13 +410,17 @@
   import { swiper, swiperSlide } from "vue-awesome-swiper"
   import comFooter from '@/components/footer.vue'
 
+  import { Tabs, TabPane } from 'element-ui';
+  Vue.use(Tabs)
+  Vue.use(TabPane)
+
   export default {
     data() {
       const self = this;
       return {
         tabs: ['首页', '找项目', '找资金','关于','联系我们'],
         partners:['partner-zgyh.png','partner-pg.png','partner-jg.png','partner-qk.png','partner-isz.png','partner-mnw.png','partner-ybjr.png','partner-bk.png','partner-wly.png','partner-ylcf.png'],
-        activeIndex: 0,
+        activeIndex: '0',
         swiper: null,
         swiperOption: {
           autoplay: true,
@@ -337,14 +429,14 @@
           direction: 'vertical',
           resistanceRatio : 0,
           on: {
-            slideChangeTransitionEnd: function(event) {
-              console.log("@")
+            transitionStart: function(event) {
+              // console.log("@")
               const index = this.activeIndex
               Vue.nextTick(function () {
-                console.log("bb")
-                self.activeIndex = index
-              console.log(self.activeIndex)
-              console.log(index)
+                // console.log("bb")
+                self.activeIndex = index + ''
+              // console.log(self.activeIndex)
+              // console.log(index)
               })
             },
             init: function () {
@@ -358,8 +450,8 @@
       gohome (){
         this.$router.push('/');
       },
-      tabHandle(index) {
-        if (this.swiper === null) return
+      tabHandle(tab, event) {
+        const index = tab.name
         this.activeIndex = index
         this.swiper.slideTo(index, 500, false)
       },

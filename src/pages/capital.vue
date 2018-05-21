@@ -582,6 +582,9 @@
     },
     mounted () {
       window.addEventListener('scroll', this.handleScroll);
+      api.applyCapital({a: 1}).then((res) => {
+        console.log(res)
+      })
     },
     methods: {
       //点击回到首页
